@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/nixos/nvidia.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -78,7 +79,6 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -130,6 +130,8 @@
     android-tools
     home-manager
     prusa-slicer
+    xclip
+    lshw
     (pkgs.discord.override {
       # remove any overrides that you don't want
       withOpenASAR = true;
