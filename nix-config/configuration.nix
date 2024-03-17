@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.default
     ];
 
   # Experimental
@@ -92,6 +93,13 @@
     ];
   };
 
+  home-manager = {
+    extraSpecialArgs = {inherit inputs;};
+    users = {
+      "caches" = import ./home.nix;
+    };
+  };
+
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "caches";
@@ -112,6 +120,16 @@
     neovide
     git
     bat
+    unzip
+    ripgrep
+    nodejs
+    go
+    rustc
+    cargo
+    lua-language-server
+    android-tools
+    home-manager
+    prusa-slicer
     (pkgs.discord.override {
       # remove any overrides that you don't want
       withOpenASAR = true;
