@@ -10,6 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/nvidia.nix
+      ../../modules/nixos/hyprland.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -134,6 +135,7 @@
     prusa-slicer
     xclip
     lshw
+    kitty
     (pkgs.discord.override {
       # remove any overrides that you don't want
       withOpenASAR = true;
