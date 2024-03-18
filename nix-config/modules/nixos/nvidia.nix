@@ -9,7 +9,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"]; # or "nvidiaLegacy470 etc.
+  services.xserver.videoDrivers = [ "nvidia" ]; # or "nvidiaLegacy470 etc.
 
   hardware.nvidia = {
 
@@ -36,14 +36,14 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	  # accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     prime = {
-    offload = {
-			enable = true;
-			enableOffloadCmd = true;
-		};
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
       amdgpuBusId = "PCI:5:0:0";
       nvidiaBusId = "PCI:1:0:0";
     };
