@@ -12,7 +12,7 @@
 
   monitors = [
     {
-      name = "Internal";
+      name = "eDP-1";
       width = 1920;
       height = 1080;
       refreshRate = 60;
@@ -21,11 +21,11 @@
       enabled = true;
     }
     {
-      name = "HDMI";
+      name = "HDMI-A-1";
       width = 2560;
       height = 1080;
       refreshRate = 60;
-      x = 0;
+      x = 1920;
       y = 0;
       enabled = true;
     }

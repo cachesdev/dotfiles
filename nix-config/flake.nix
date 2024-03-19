@@ -15,6 +15,11 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    xdg-desktop-portal-hyprland = {
+      url = "github:hyprwm/xdg-desktop-portal-hyprland";
+      inputs.nixpkgs.follows = "hyprland";
+    };
+    walker.url = "github:abenz1267/walker";
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
