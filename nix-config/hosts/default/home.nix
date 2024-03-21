@@ -4,6 +4,7 @@
 
   imports = [
     ../../modules/home-manager/monitors.nix
+    ../../modules/home-manager/fish.nix
     ../../modules/home-manager/hyprland/hyprland.nix
   ];
 

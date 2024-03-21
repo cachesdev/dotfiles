@@ -28,6 +28,10 @@
         "col.active_border" = "rgb(94e2d5) rgb(89dceb) rgb(74c7ec) rgb(89b4fa) rgb(b4befe) rgb(babbf1) 52deg";
       };
 
+      misc = {
+        disable_hyprland_logo = true;
+      };
+
       decoration = {
         rounding = 5;
         active_opacity = 0.95;
@@ -69,8 +73,8 @@
       windowrulev2 = [
         "noblur,class:(firefox)"
         "opacity 1 override,class:(firefox)"
-        "opacity 0.9 override,class:(neovide)"
-        "opacity 0.9 override,class:(kitty)"
+        "opacity 0.8 override,class:(neovide)"
+        "opacity 0.8 override,class:(kitty)"
         "opacity 0.9 override,class:(Spotify)"
         "opacity 0.97 override,class:(discord)"
       ];
@@ -125,6 +129,9 @@
         # Switch keyboard layouts
         "$mainMod, code:65, exec, hyprctl switchxkblayout corsair-corsair-gaming-k70-lux-rgb-keyboard--keyboard next"
         "$mainMod, code:65, exec, hyprctl switchxkblayout at-translated-set-2-keyboard next"
+
+        # Misc
+        "$mainMod, f, togglefloating,"
       ];
 
       bindr = [

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
-flameshot screen -c
+# flameshot screen -c
+grim screen
 
 play $HOME/.dotfiles/assets/sounds/camera-shutter.ogg

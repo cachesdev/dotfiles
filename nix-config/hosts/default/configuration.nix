@@ -21,6 +21,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Default Shell
+  programs.fish.enable = true;
+  users.defaultUserShell = pkgs.fish;
 
   networking.hostName = "nixos"; # Define your hostname.
 
@@ -153,6 +156,9 @@
     nixpkgs-fmt
     fastfetch
     btop
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    zsh-powerlevel10k
     inputs.walker
     (pkgs.discord.override {
       withVencord = true;
