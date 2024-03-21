@@ -15,7 +15,7 @@
 
       exec-once = [
         "waybar"
-        "python3 /home/caches/script.py"
+        "python3 /home/caches/.dotfiles/scripts/swww.py"
       ];
 
       "$terminal" = "kitty";
@@ -23,8 +23,9 @@
 
       general = {
         resize_on_border = true;
-        border_size = 2;
+        border_size = 4;
         gaps_out = 10;
+        "col.active_border" = "rgb(94e2d5) rgb(89dceb) rgb(74c7ec) rgb(89b4fa) rgb(b4befe) rgb(babbf1) 52deg";
       };
 
       decoration = {
@@ -33,17 +34,59 @@
         inactive_opacity = 0.95;
         fullscreen_opacity = 0.95;
         dim_inactive = false;
+        blur = {
+          size = 5;
+          passes = 3;
+          contrast = 1;
+          brightness = 1.0;
+          vibrancy = 0.5;
+          vibrancy_darkness = 0.5;
+          ignore_opacity = true;
+        };
       };
 
       input = {
-      sensitivity = 0.2;
-      accel_profile = "flat";
-      follow_mouse = 2;
+        sensitivity = 0.2;
+        accel_profile = "flat";
+        follow_mouse = 2;
+        kb_layout = "us,latam";
+        touchpad = {
+          natural_scroll = true;
+        };
       };
+
+      device = [
+        { 
+          name = "corsair-corsair-gaming-k70-lux-rgb-keyboard--keyboard";
+          kb_layout = "us,latam";
+        }
+        {
+          name = "at-translated-set-2-keyboard";
+          kb_layout = "us,latam";
+        }
+      ];
 
       windowrulev2 = [
         "noblur,class:(firefox)"
         "opacity 1 override,class:(firefox)"
+        "opacity 0.9 override,class:(neovide)"
+        "opacity 0.9 override,class:(kitty)"
+        "opacity 0.9 override,class:(Spotify)"
+        "opacity 0.97 override,class:(discord)"
+      ];
+
+      # animation=NAME,ONOFF,SPEED,CURVE,STYLE Style optional
+      bezier = [
+        "curve,0.12, 0, 0.39, 0"
+        "linear, 0.0, 0.0, 1.0, 1.0"
+      ];
+
+      animation = [
+        "borderangle,1,150,linear,loop"
+        "windows,1,2,default,popin"
+        "fadeIn,1,3,default"
+        "fadeOut,1,3,default"
+        "workspaces,1,2.5,default,slide"
       ];
 
       bind = [
@@ -58,9 +101,6 @@
         "$mainMod, 5, workspace, 5"
         "$mainMod, 6, workspace, 6"
         "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
 
         # Move focus with mainMod + arrow keys
         "$mainMod, h, movefocus, l"
@@ -71,6 +111,7 @@
         # Switch workspaces with jk
         "$mainMod, j, workspace, e+1"
         "$mainMod, k, workspace, e-1"
+        "$mainMod, s, swapactiveworkspaces, eDP-1 HDMI-A-1"
 
         # Move windows to another workspace
         "$mainMod SHIFT, 1, movetoworkspace, 1"
@@ -80,9 +121,16 @@
         "$mainMod SHIFT, 5, movetoworkspace, 5"
         "$mainMod SHIFT, 6, movetoworkspace, 6"
         "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
+
+        # Switch keyboard layouts
+        "$mainMod, code:65, exec, hyprctl switchxkblayout corsair-corsair-gaming-k70-lux-rgb-keyboard--keyboard next"
+        "$mainMod, code:65, exec, hyprctl switchxkblayout at-translated-set-2-keyboard next"
+      ];
+
+      bindr = [
+        ",Print, exec, /home/caches/.dotfiles/scripts/captureScreen.sh"
+        "Shift_R, Print,exec, /home/caches/.dotfiles/scripts/captureArea.sh"
+        "SUPER, SUPER_L, exec, pkill rofi || rofi -show drun"
       ];
 
       bindm = [

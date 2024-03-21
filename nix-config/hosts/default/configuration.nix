@@ -136,12 +136,25 @@
     grim
     swww
     waypaper
-    python3
+    (pkgs.python3.withPackages (python-pkgs: [
+      python-pkgs.pygobject3
+    ]))
+    gobject-introspection
+    playerctl
+    python311Packages.pip
     dolphin
-    walker
+    pavucontrol
+    rofi-wayland
+    wev
+    slurp
+    sox
+    spotify
+    stress
+    nixpkgs-fmt
+    fastfetch
+    btop
+    inputs.walker
     (pkgs.discord.override {
-      # remove any overrides that you don't want
-      withOpenASAR = true;
       withVencord = true;
     })
 

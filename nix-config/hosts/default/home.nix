@@ -30,6 +30,26 @@
       enabled = true;
     }
   ];
+
+
+  # Set Dark Theme
+  gtk = {
+    enable = true;
+    theme.package = pkgs.tokyonight-gtk-theme;
+    theme.name = "Tokyonight-Dark-BL";
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = true;
+    };
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk";
+  };
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
