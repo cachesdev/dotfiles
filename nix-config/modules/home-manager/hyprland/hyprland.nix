@@ -1,5 +1,7 @@
 { pkgs, lib, inputs, config, ... }: {
 
+  wayland.windowManager.hyprland.systemd.enable = true;
+  wayland.windowManager.hyprland.xwayland.enable = true;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -14,8 +16,10 @@
         (config.monitors);
 
       exec-once = [
+        # "xwaylandvideobridge"
         "waybar"
         "python3 /home/caches/.dotfiles/scripts/swww.py"
+        "dunst"
       ];
 
       "$terminal" = "kitty";
@@ -73,10 +77,16 @@
       windowrulev2 = [
         "noblur,class:(firefox)"
         "opacity 1 override,class:(firefox)"
-        "opacity 0.8 override,class:(neovide)"
-        "opacity 0.8 override,class:(kitty)"
+        "opacity 0.85 override,class:(neovide)"
+        "opacity 0.85 override,class:(kitty)"
         "opacity 0.9 override,class:(Spotify)"
         "opacity 0.97 override,class:(discord)"
+
+        "opacity 0.0 override 0.0 override,class:^(xwaylandvideobridge)$"
+        "noanim,class:^(xwaylandvideobridge)$"
+        "noinitialfocus,class:^(xwaylandvideobridge)$"
+        "maxsize 1 1,class:^(xwaylandvideobridge)$"
+        "noblur,class:^(xwaylandvideobridge)$"
       ];
 
       # animation=NAME,ONOFF,SPEED,CURVE,STYLE Style optional

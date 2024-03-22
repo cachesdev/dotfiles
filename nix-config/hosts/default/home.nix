@@ -11,6 +11,12 @@
   home.username = "caches";
   home.homeDirectory = "/home/caches";
 
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
   monitors = [
     {
       name = "eDP-1";

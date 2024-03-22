@@ -11,8 +11,15 @@
       ./hardware-configuration.nix
       ../../modules/nixos/nvidia.nix
       ../../modules/nixos/hyprland.nix
+      ./secrets.nix
       inputs.home-manager.nixosModules.default
     ];
+
+    # Substituters
+    nix.settings = {
+      trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
+      trusted-substituters = [ "https://devenv.cachix.org" ];
+    };
 
   # Experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -76,7 +83,28 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
   };
+
+  # Polkit KDE Auth
+  security.polkit.enable = true;
+
+  systemd = {
+    user.services.polkit-kde-authentication-agent-1 = {
+      description = "polkit-kde-authentication-agent-1";
+      wantedBy = [ "hyprland-session.target" ];
+      wants = [ "hyprland-session.target" ];
+      after = [ "hyprland-session.target" ];
+      serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+      };
+    };
+  };
+  
 
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -114,6 +142,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    # polkit_gnome
+    gh
+    libsForQt5.polkit-kde-agent
+    xwaylandvideobridge
+    dunst
     gcc
     neovim
     lf
@@ -159,6 +192,10 @@
     zsh-autosuggestions
     zsh-syntax-highlighting
     zsh-powerlevel10k
+    bat-extras.batman
+    ifwifi
+    jetbrains.idea-ultimate
+    onlyoffice-bin
     inputs.walker
     (pkgs.discord.override {
       withVencord = true;
