@@ -1,2 +1,1 @@
-
-./nix-config/hosts/default/secrets.nix
+nix-config/hosts/default/secrets.nix
