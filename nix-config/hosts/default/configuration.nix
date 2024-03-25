@@ -1,4 +1,4 @@
-# Edit this configuration file to define what should be installed on
+#gEdit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
@@ -11,7 +11,7 @@
       ./hardware-configuration.nix
       ../../modules/nixos/nvidia.nix
       ../../modules/nixos/hyprland.nix
-      ./secrets.nix
+      # ./secrets.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -61,9 +61,10 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  services.xserver.displayManager.startx.enable = true;
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.desktopManager.gnome.enable = false;
 
   # Configure keymap in X11
   services.xserver = {
@@ -106,9 +107,25 @@
   };
   
 
+  # Power Management
+  services.power-profiles-daemon.enable = false; # Disable default power management
+  services.tlp = {
+    enable = true;
+    settings = {
+    CPU_SCALING_GOVERNOR_ON_AC="performance";
+    CPU_SCALING_GOVERNOR_ON_BAT="powersave";
+    CPU_ENERGY_PERF_POLICY_ON_AC="performance";
+    CPU_ENERGY_PERF_POLICY_ON_BAT="power";
+    # iGPU
+    RADEON_DPM_STATE_ON_AC="performance";
+    RADEON_DPM_STATE_ON_BAT="battery";
+    };
+  };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  # Bluetooth
+  hardware.bluetooth.enable = true; 
+  hardware.bluetooth.powerOnBoot = true; 
+  services.blueman.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.caches = {
@@ -129,12 +146,12 @@
   };
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "caches";
+  # services.xserver.displayManager.autoLogin.enable = true;
+  # services.xserver.displayManager.autoLogin.user = "caches";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+  # systemd.services."getty@tty1".enable = false;
+  # systemd.services."autovt@tty1".enable = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -142,15 +159,29 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    powertop
     # polkit_gnome
+    networkmanager
+    anki
     gh
     libsForQt5.polkit-kde-agent
     xwaylandvideobridge
     dunst
     gcc
-    neovim
     lf
+    (neovim.override {
+      withNodeJs = true; 
+      withPython3 = true;
+      extraPython3Packages = ps: with ps; [
+        pynvim
+        python-dotenv
+        requests
+        prompt-toolkit
+      ];
+      })
+    (pkgs.python3.withPackages(ps: with ps; [ pip ]))
     neovide
+    obsidian
     git
     bat
     unzip
@@ -172,12 +203,7 @@
     grim
     swww
     waypaper
-    (pkgs.python3.withPackages (python-pkgs: [
-      python-pkgs.pygobject3
-    ]))
-    gobject-introspection
     playerctl
-    python311Packages.pip
     dolphin
     pavucontrol
     rofi-wayland
@@ -187,6 +213,8 @@
     spotify
     stress
     nixpkgs-fmt
+    lua
+    luajitPackages.luarocks
     fastfetch
     btop
     zsh-autosuggestions
@@ -196,6 +224,9 @@
     ifwifi
     jetbrains.idea-ultimate
     onlyoffice-bin
+    wget
+    cloc
+    zsh
     inputs.walker
     (pkgs.discord.override {
       withVencord = true;
@@ -218,7 +249,10 @@
   ];
 
   fonts.packages = with pkgs; [
+    noto-fonts-cjk-sans
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    corefonts
+    atkinson-hyperlegible
   ];
 
 
