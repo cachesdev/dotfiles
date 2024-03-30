@@ -4,7 +4,7 @@
     interactiveShellInit = ''
     fastfetch
     set -U fish_greeting
-    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+    alias man='batman'
     alias nixrebuild='cd /home/caches/.dotfiles/nix-config/ && sudo nixos-rebuild switch --flake .#default'
     '';
     plugins = [

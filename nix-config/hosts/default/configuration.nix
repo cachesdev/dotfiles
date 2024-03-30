@@ -105,20 +105,23 @@
       };
     };
   };
-  
+ 
+ # Java
+  programs.java.package = pkgs.jdk;
+  programs.java.enable = true;
 
   # Power Management
   services.power-profiles-daemon.enable = false; # Disable default power management
   services.tlp = {
     enable = true;
-    settings = {
-    CPU_SCALING_GOVERNOR_ON_AC="performance";
-    CPU_SCALING_GOVERNOR_ON_BAT="powersave";
-    CPU_ENERGY_PERF_POLICY_ON_AC="performance";
-    CPU_ENERGY_PERF_POLICY_ON_BAT="power";
-    # iGPU
-    RADEON_DPM_STATE_ON_AC="performance";
-    RADEON_DPM_STATE_ON_BAT="battery";
+      settings = {
+      CPU_SCALING_GOVERNOR_ON_AC="performance";
+      CPU_SCALING_GOVERNOR_ON_BAT="powersave";
+      CPU_ENERGY_PERF_POLICY_ON_AC="performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT="power";
+      # iGPU
+      RADEON_DPM_STATE_ON_AC="performance";
+      RADEON_DPM_STATE_ON_BAT="battery";
     };
   };
 
@@ -159,9 +162,14 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    vesktop
     powertop
+    gopls
+    cobra-cli
     # polkit_gnome
     networkmanager
+    gnome.gnome-themes-extra
+    gnome.gnome-tweaks
     anki
     gh
     libsForQt5.polkit-kde-agent
@@ -225,8 +233,12 @@
     jetbrains.idea-ultimate
     onlyoffice-bin
     wget
+    github-copilot-intellij-agent
     cloc
     zsh
+    cinnamon.nemo-with-extensions
+    brightnessctl
+    fzf
     inputs.walker
     (pkgs.discord.override {
       withVencord = true;

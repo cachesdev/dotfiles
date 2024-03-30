@@ -78,6 +78,8 @@
         "noblur,class:(firefox)"
         "opacity 1 override,class:(firefox)"
         "opacity 0.85 override,class:(neovide)"
+        "opacity 0.85 override,class:(nemo)"
+        "opacity 0.95 override,class:(jetbrains-idea)"
         "opacity 0.85 override,class:(kitty)"
         "opacity 0.9 override,class:(Spotify)"
         "opacity 0.97 override,class:(discord)"
