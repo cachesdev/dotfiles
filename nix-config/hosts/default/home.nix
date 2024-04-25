@@ -35,6 +35,7 @@
       x = 1920;
       y = 0;
       enabled = true;
+      # mirror = "mirror,eDP-1";
     }
   ];
 
@@ -69,7 +70,7 @@
   # environment.
   home.packages = [
 
-  # Global Python3
+    # Global Python3
 
   ];
 

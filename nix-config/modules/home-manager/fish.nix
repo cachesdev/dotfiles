@@ -2,10 +2,10 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-    fastfetch
-    set -U fish_greeting
-    alias man='batman'
-    alias nixrebuild='cd /home/caches/.dotfiles/nix-config/ && sudo nixos-rebuild switch --flake .#default'
+      fastfetch
+      set -U fish_greeting
+      alias man='batman'
+      alias nixrebuild='cd /home/caches/.dotfiles/nix-config/ && sudo nixos-rebuild switch --flake .#default'
     '';
     plugins = [
       {
@@ -14,4 +14,10 @@
       }
     ];
   };
- }
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+    options = [ "--cmd cd" ];
+  };
+}

@@ -12,7 +12,7 @@ def find_wallpapers(directory):
     return wallpapers
 
 def set_wallpaper(wallpaper):
-    subprocess.run(["swww", "img","-t","grow","--transition-pos","bottom-right", wallpaper])
+    subprocess.run(["swww", "img","-t","grow","--transition-pos","top-left", wallpaper])
 
 def main():
     wallpaper_directory = "/home/caches/Pictures/Wallpapers"

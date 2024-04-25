@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, config, ... }: {
+{ config, ... }: {
 
   wayland.windowManager.hyprland.systemd.enable = true;
   wayland.windowManager.hyprland.xwayland.enable = true;
@@ -11,7 +11,7 @@
             resolution = "${toString m.width}x${toString m.height}@${toString m.refreshRate}";
             position = "${toString m.x}x${toString m.y}";
           in
-          "${m.name},${if m.enabled then "${resolution},${position},1" else "disable"}"
+          "${m.name},${if m.enabled then "${resolution},${position},1,${m.mirror}" else "disable"}"
         )
         (config.monitors);
 
@@ -26,6 +26,7 @@
       "$mainMod" = "SUPER";
 
       general = {
+        layout = "master";
         resize_on_border = true;
         border_size = 4;
         gaps_out = 10;
@@ -40,7 +41,7 @@
         rounding = 5;
         active_opacity = 0.95;
         inactive_opacity = 0.95;
-        fullscreen_opacity = 0.95;
+        fullscreen_opacity = 1.0;
         dim_inactive = false;
         blur = {
           size = 5;
@@ -64,7 +65,7 @@
       };
 
       device = [
-        { 
+        {
           name = "corsair-corsair-gaming-k70-lux-rgb-keyboard--keyboard";
           kb_layout = "us,latam";
         }
@@ -72,6 +73,10 @@
           name = "at-translated-set-2-keyboard";
           kb_layout = "us,latam";
         }
+      ];
+
+      layerrule = [
+        "blur,rofi"
       ];
 
       windowrulev2 = [
@@ -91,6 +96,10 @@
         "noblur,class:^(xwaylandvideobridge)$"
       ];
 
+      master = {
+        mfact = 0.80;
+      };
+
       # animation=NAME,ONOFF,SPEED,CURVE,STYLE Style optional
       bezier = [
         "curve,0.12, 0, 0.39, 0"
@@ -103,6 +112,16 @@
         "fadeIn,1,3,default"
         "fadeOut,1,3,default"
         "workspaces,1,2.5,default,slide"
+      ];
+
+      workspace = [
+        "name:1, monitor:eDP-1"
+        "name:2, monitor:HDMI-A-1"
+        "name:3, monitor:HDMI-A-1"
+        "name:4, monitor:HDMI-A-1"
+        "name:5, monitor:HDMI-A-1"
+        "name:6, monitor:HDMI-A-1"
+        "name:7, monitor:HDMI-A-1"
       ];
 
       bind = [
@@ -144,12 +163,19 @@
 
         # Misc
         "$mainMod, f, togglefloating,"
+
+        # Master layout
+        "$mainMod, x, layoutmsg, rollprev"
+        "$mainMod, z, layoutmsg, rollnext"
+        "$mainMod, c, layoutmsg, focusmaster"
       ];
 
       bindr = [
         ",Print, exec, /home/caches/.dotfiles/scripts/captureScreen.sh"
         "Shift_R, Print,exec, /home/caches/.dotfiles/scripts/captureArea.sh"
-        "SUPER, SUPER_L, exec, pkill rofi || rofi -show drun"
+        # "SUPER, SUPER_L, exec, pkill rofi || rofi -show drun"
+        "SUPER, SUPER_L, exec, pkill rofi || ~/.config/rofi/launchers/type-1/launcher.sh"
+
       ];
 
       bindm = [

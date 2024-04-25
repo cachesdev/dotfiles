@@ -15,11 +15,11 @@
       inputs.home-manager.nixosModules.default
     ];
 
-    # Substituters
-    nix.settings = {
-      trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
-      trusted-substituters = [ "https://devenv.cachix.org" ];
-    };
+  # Substituters
+  nix.settings = {
+    trusted-public-keys = [ "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=" ];
+    trusted-substituters = [ "https://devenv.cachix.org" ];
+  };
 
   # Experimental
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -97,16 +97,16 @@
       wants = [ "hyprland-session.target" ];
       after = [ "hyprland-session.target" ];
       serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
-          Restart = "on-failure";
-          RestartSec = 1;
-          TimeoutStopSec = 10;
+        Type = "simple";
+        ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
       };
     };
   };
- 
- # Java
+
+  # Java
   programs.java.package = pkgs.jdk;
   programs.java.enable = true;
 
@@ -114,20 +114,20 @@
   services.power-profiles-daemon.enable = false; # Disable default power management
   services.tlp = {
     enable = true;
-      settings = {
-      CPU_SCALING_GOVERNOR_ON_AC="performance";
-      CPU_SCALING_GOVERNOR_ON_BAT="powersave";
-      CPU_ENERGY_PERF_POLICY_ON_AC="performance";
-      CPU_ENERGY_PERF_POLICY_ON_BAT="power";
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
       # iGPU
-      RADEON_DPM_STATE_ON_AC="performance";
-      RADEON_DPM_STATE_ON_BAT="battery";
+      RADEON_DPM_STATE_ON_AC = "performance";
+      RADEON_DPM_STATE_ON_BAT = "battery";
     };
   };
 
   # Bluetooth
-  hardware.bluetooth.enable = true; 
-  hardware.bluetooth.powerOnBoot = true; 
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -159,12 +159,57 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # path I tihnk
+  environment.variables = {
+    PATH = [ "/home/caches/Documents/repos/fresco" ];
+  };
+
+  # plex
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+    user = "caches";
+  };
+
+  # Automount
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
+  # Firebird
+services.firebird = {
+      enable = true;
+      package = pkgs.firebird_2_5;
+    };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    (pkgs.makeDesktopItem {
+      type = "Application";
+      exec = "neovide --grid 80x24";
+      icon = "neovide";
+      name = "NeovideFix";
+      keywords = [ "editor" "neovim" "vim" "rust" ];
+      categories = [ "Utility" "TextEditor" ];
+      comment = "No Nonsense Neovim Client In Rust";
+      mimeTypes = [ "text/english" "text/plain" "text/x-makefile" "text/x-c++hdr" "text/x-c++src" "text/x-chdr" "text/x-csrc" "text/x-java" "text/x-moc" "text/x-pascal" "text/x-tcl" "text/x-tex" "application/x-shellscript" "text/x-c" "text/x-c++" ];
+      desktopName = "NeovideFix";
+      genericName = "GUI Frontend";
+    })
+    (pkgs.ventoy.override { withGtk3 = true; })
+    oculante
+    jetbrains.datagrip
+    vscode-langservers-extracted
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+    qbittorrent
+    go-tools
     vesktop
     powertop
     gopls
+    google-chrome
     cobra-cli
     # polkit_gnome
     networkmanager
@@ -178,7 +223,7 @@
     gcc
     lf
     (neovim.override {
-      withNodeJs = true; 
+      withNodeJs = true;
       withPython3 = true;
       extraPython3Packages = ps: with ps; [
         pynvim
@@ -186,8 +231,9 @@
         requests
         prompt-toolkit
       ];
-      })
-    (pkgs.python3.withPackages(ps: with ps; [ pip ]))
+    })
+    (pkgs.python3.withPackages (ps: with ps; [ pip ]))
+    rar
     neovide
     obsidian
     git
@@ -199,7 +245,6 @@
     rustc
     cargo
     lua-language-server
-    android-tools
     home-manager
     prusa-slicer
     xclip
@@ -239,6 +284,10 @@
     cinnamon.nemo-with-extensions
     brightnessctl
     fzf
+    vscode-fhs
+    yt-dlp
+    ed
+    zoxide
     inputs.walker
     (pkgs.discord.override {
       withVencord = true;
@@ -262,10 +311,13 @@
 
   fonts.packages = with pkgs; [
     noto-fonts-cjk-sans
-    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    (nerdfonts.override { fonts = [ "CascadiaCode" "Go-Mono"]; })
     corefonts
     atkinson-hyperlegible
   ];
+
+
+
 
 
   system.stateVersion = "23.11"; # Did you read the comment?

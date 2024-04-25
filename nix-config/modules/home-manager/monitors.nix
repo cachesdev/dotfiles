@@ -34,6 +34,10 @@ in
           type = types.bool;
           default = true;
         };
+        mirror = mkOption {
+          type = types.str;
+          default = "";
+        };
       };
     });
     default = [ ];
