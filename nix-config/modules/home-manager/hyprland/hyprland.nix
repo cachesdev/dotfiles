@@ -25,6 +25,10 @@
       "$terminal" = "kitty";
       "$mainMod" = "SUPER";
 
+      env = [
+         "WLR_NO_HARDWARE_CURSORS,1"
+      ];
+
       general = {
         layout = "master";
         resize_on_border = true;

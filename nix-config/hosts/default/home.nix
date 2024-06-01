@@ -44,12 +44,12 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Catppuccin-Macchiato-Standard-Blue-Dark";
+      name = "Catppuccin-Latte-Standard-Blue-Dark";
       package = pkgs.catppuccin-gtk.override {
         accents = [ "blue" ];
         size = "standard";
         tweaks = [ "rimless" ];
-        variant = "macchiato";
+        variant = "latte";
       };
     };
   };
@@ -63,7 +63,8 @@
 
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "adwaita";
+    style.name = "adwaita";
   };
 
   # The home.packages option allows you to install Nix packages into your

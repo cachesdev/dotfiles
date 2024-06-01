@@ -177,10 +177,22 @@
   services.udisks2.enable = true;
 
   # Firebird
-services.firebird = {
-      enable = true;
-      package = pkgs.firebird_2_5;
-    };
+# services.firebird = {
+#       enable = true;
+#       package = pkgs.firebird_2_5;
+#     };
+
+networking.firewall = {
+  enable = true;
+  allowedTCPPorts = [ 5173 ];
+  allowedUDPPortRanges = [
+    { from = 5172; to = 5173; }
+  ];
+};
+
+  # MySql
+  services.mysql.enable = true;
+  services.mysql.package = pkgs.mysql80;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -211,6 +223,7 @@ services.firebird = {
     gopls
     google-chrome
     cobra-cli
+    lazygit
     # polkit_gnome
     networkmanager
     gnome.gnome-themes-extra
@@ -220,6 +233,7 @@ services.firebird = {
     libsForQt5.polkit-kde-agent
     xwaylandvideobridge
     dunst
+    mblock-mlink
     gcc
     lf
     (neovim.override {
@@ -233,6 +247,8 @@ services.firebird = {
       ];
     })
     (pkgs.python3.withPackages (ps: with ps; [ pip ]))
+    mysql-workbench
+    dolphin
     rar
     neovide
     obsidian
@@ -288,11 +304,7 @@ services.firebird = {
     yt-dlp
     ed
     zoxide
-    inputs.walker
-    (pkgs.discord.override {
-      withVencord = true;
-    })
-
+    discord
     # Flameshot with Wayland support
     (pkgs.flameshot.overrideAttrs {
       src = pkgs.fetchFromGitHub {
