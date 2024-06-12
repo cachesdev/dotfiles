@@ -196,7 +196,7 @@ networking.firewall = {
 
   nixpkgs.overlays = [
     (self: super: {
-      mblock-mlink = super.callPackage ../../drv/mlink2.nix { };
+      mblock-mlink = super.callPackage ../../drv/mblock-mlink.nix { };
     })
   ];
 
@@ -218,7 +218,6 @@ networking.firewall = {
     (pkgs.ventoy.override { withGtk3 = true; })
     oculante
     jetbrains.datagrip
-    mblock-mlink
     vscode-langservers-extracted
     jellyfin
     jellyfin-web
@@ -230,12 +229,6 @@ networking.firewall = {
     gopls
     google-chrome
     cobra-cli
-    (pkgs.mblock-mlink.overrideAttrs {
-      src = fetchurl {
-        url = "file:///home/caches/Downloads/mLink-1.2.0-amd64.deb";
-        sha256 = "sha256-qDu6JV0tbkJPBYw4ogTyc6T0C8rDjIKD9VGnBWtgVkA=";
-      };
-    })
     lazygit
     # polkit_gnome
     networkmanager

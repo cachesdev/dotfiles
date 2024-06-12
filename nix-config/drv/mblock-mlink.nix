@@ -1,5 +1,5 @@
 
-{ stdenv, lib, fetchurl, rpmextract, makeWrapper, autoPatchelfHook }:
+{ stdenv, lib, fetchurl, rpmextract, makeWrapper, autoPatchelfHook, cpio }:
 
 stdenv.mkDerivation rec {
   pname = "mblock-mlink";
@@ -8,7 +8,7 @@ stdenv.mkDerivation rec {
   src = /home/caches/Downloads/mLink-1.2.0-1.el7.x86_64.rpm;
 
   unpackPhase = ''
-    ${rpmextract}/bin/rpm2cpio $src | cpio -idmv
+    ${rpmextract}/bin/rpm2cpio $src | ${cpio}/bin/cpio -idmv
   '';
 
   buildInputs = [
