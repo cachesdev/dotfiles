@@ -10,7 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/nvidia.nix
-      ../../modules/nixos/hyprland.nix
+      # ../../modules/nixos/hyprland.nix changing to home manager
       # ./secrets.nix
       inputs.home-manager.nixosModules.default
     ];
@@ -239,6 +239,8 @@ networking.firewall = {
     libsForQt5.polkit-kde-agent
     xwaylandvideobridge
     dunst
+    parsec-bin
+    killall
     gcc
     lf
     (neovim.override {

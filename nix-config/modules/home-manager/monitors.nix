@@ -38,6 +38,10 @@ in
           type = types.str;
           default = "";
         };
+        misc = mkOption {
+          type = types.str;
+          default = "";
+        };
       };
     });
     default = [ ];

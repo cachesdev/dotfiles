@@ -36,6 +36,7 @@
       y = 0;
       enabled = true;
       # mirror = "mirror,eDP-1";
+      misc = "bitdepth,10";
     }
   ];
 
@@ -83,6 +84,11 @@
   home.sessionVariables = {
     EDITOR = "nvim";
   };
+
+  # Hyprland
+  programs.hyprland = {
+    enable = true;
+  }
 
   home.stateVersion = "23.11";
   programs.home-manager.enable = true;
