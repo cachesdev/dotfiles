@@ -10,7 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/nvidia.nix
-      # ../../modules/nixos/hyprland.nix changing to home manager
+      ../../modules/nixos/hyprland.nix changing to home manager
       # ./secrets.nix
       inputs.home-manager.nixosModules.default
     ];
