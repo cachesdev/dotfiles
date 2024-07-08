@@ -6,6 +6,7 @@
       set -U fish_greeting
       alias man='batman'
       alias nixrebuild='cd /home/caches/.dotfiles/nix-config/ && sudo nixos-rebuild switch --flake .#default'
+      set -gx PATH $PATH $HOME/go/bin
     '';
     plugins = [
       {

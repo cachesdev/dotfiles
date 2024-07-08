@@ -10,7 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/nixos/nvidia.nix
-      ../../modules/nixos/hyprland.nix changing to home manager
+      ../../modules/nixos/hyprland.nix
       # ./secrets.nix
       inputs.home-manager.nixosModules.default
     ];
@@ -56,7 +56,7 @@
   };
 
   xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ inputs.xdg-desktop-portal-hyprland ];
+  xdg.portal.extraPortals = [ inputs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -230,6 +230,7 @@ networking.firewall = {
     google-chrome
     cobra-cli
     lazygit
+    eclipses.eclipse-java
     # polkit_gnome
     networkmanager
     gnome.gnome-themes-extra
@@ -303,9 +304,11 @@ networking.firewall = {
     wget
     github-copilot-intellij-agent
     cloc
+    jdk17
     zsh
     cinnamon.nemo-with-extensions
     brightnessctl
+    prismlauncher
     fzf
     vscode-fhs
     yt-dlp

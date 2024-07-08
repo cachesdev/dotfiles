@@ -1,7 +1,8 @@
-{ config, ... }: {
+{ config, inputs, pkgs, ... }: {
 
   wayland.windowManager.hyprland.systemd.enable = true;
   wayland.windowManager.hyprland.xwayland.enable = true;
+  wayland.windowManager.hyprland.package = inputs.hyprland.packages."${pkgs.system}".hyprland;
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
@@ -86,6 +87,7 @@
       windowrulev2 = [
         "noblur,class:(firefox)"
         "opacity 1 override,class:(firefox)"
+        "opacity 1 override, class:(Minecraft* 1.18.2)"
         "opacity 0.85 override,class:(neovide)"
         "opacity 0.85 override,class:(nemo)"
         "opacity 0.95 override,class:(jetbrains-idea)"
