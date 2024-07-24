@@ -55,8 +55,14 @@
     LC_TIME = "es_PY.UTF-8";
   };
 
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ inputs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ 
+      inputs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -233,8 +239,9 @@ networking.firewall = {
     eclipses.eclipse-java
     # polkit_gnome
     networkmanager
-    gnome.gnome-themes-extra
-    gnome.gnome-tweaks
+    gnome-themes-extra
+    webcord
+    gnome-tweaks
     anki
     gh
     libsForQt5.polkit-kde-agent
@@ -244,6 +251,8 @@ networking.firewall = {
     killall
     gcc
     lf
+    mc
+    file
     (neovim.override {
       withNodeJs = true;
       withPython3 = true;
@@ -252,9 +261,11 @@ networking.firewall = {
         python-dotenv
         requests
         prompt-toolkit
+        pyqt6
       ];
     })
-    (pkgs.python3.withPackages (ps: with ps; [ pip ]))
+    (pkgs.python3.withPackages (ps: with ps; [ pip pyqt6 ]))
+    kdePackages.qtwayland
     mysql-workbench
     dolphin
     rar
