@@ -206,7 +206,7 @@ networking.firewall = {
 
   nixpkgs.overlays = [
     (self: super: {
-      zed-unstable = super.callPackage ../../drv/zed-unstable.nix { };
+      zed-unstable = super.callPackage ../../drv/zed/zed-unstable.nix { };
     })
   ];
 
