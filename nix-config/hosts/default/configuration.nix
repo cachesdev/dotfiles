@@ -86,7 +86,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -206,13 +206,14 @@ networking.firewall = {
 
   nixpkgs.overlays = [
     (self: super: {
-      mblock-mlink = super.callPackage ../../drv/mblock-mlink.nix { };
+      zed-unstable = super.callPackage ../../drv/zed-unstable.nix { };
     })
   ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    zed-unstable
     (pkgs.makeDesktopItem {
       type = "Application";
       exec = "neovide --grid 80x24";
@@ -247,7 +248,6 @@ networking.firewall = {
     webcord
     gnome-tweaks
     anki
-    zed-editor
     gh
     libsForQt5.polkit-kde-agent
     xwaylandvideobridge
@@ -273,7 +273,6 @@ networking.firewall = {
     })
     (pkgs.python3.withPackages (ps: with ps; [ pip pyqt6 ]))
     kdePackages.qtwayland
-    mysql-workbench
     sshocker
     dolphin
     rar

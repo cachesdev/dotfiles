@@ -23,11 +23,13 @@
         "dunst"
       ];
 
+
       "$terminal" = "kitty";
       "$mainMod" = "SUPER";
 
       env = [
-         "WLR_NO_HARDWARE_CURSORS,1"
+         "HYPRCURSOR_THEME,catppuccin-frappe-dark-cursors"
+         "HYPRCURSOR_SIZE,24"
       ];
 
       general = {
