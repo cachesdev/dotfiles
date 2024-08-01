@@ -61,6 +61,10 @@
     extraPortals = [ 
       inputs.xdg-desktop-portal-hyprland
       pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal
+      pkgs.xdg-desktop-portal-gnome
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.kdePackages.xdg-desktop-portal-kde
     ];
   };
 
@@ -243,6 +247,7 @@ networking.firewall = {
     webcord
     gnome-tweaks
     anki
+    zed-editor
     gh
     libsForQt5.polkit-kde-agent
     xwaylandvideobridge
@@ -253,6 +258,8 @@ networking.firewall = {
     lf
     mc
     file
+    sshfs
+    realvnc-vnc-viewer
     (neovim.override {
       withNodeJs = true;
       withPython3 = true;
@@ -267,6 +274,7 @@ networking.firewall = {
     (pkgs.python3.withPackages (ps: with ps; [ pip pyqt6 ]))
     kdePackages.qtwayland
     mysql-workbench
+    sshocker
     dolphin
     rar
     neovide
@@ -276,6 +284,7 @@ networking.firewall = {
     unzip
     ripgrep
     nodejs
+    nodePackages.eslint
     go
     rustc
     cargo

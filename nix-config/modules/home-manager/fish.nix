@@ -7,6 +7,7 @@
       alias man='batman'
       alias nixrebuild='cd /home/caches/.dotfiles/nix-config/ && sudo nixos-rebuild switch --flake .#default'
       set -gx PATH $PATH $HOME/go/bin
+      set -gx PATH $PATH $HOME/.node_modules/bin
       set -Ux TERM xterm-256color
 
       function runbg
