@@ -204,16 +204,20 @@ networking.firewall = {
   services.mysql.enable = true;
   services.mysql.package = pkgs.mysql80;
 
-  nixpkgs.overlays = [
-    (self: super: {
-      zed-unstable = super.callPackage ../../drv/zed/zed-unstable.nix { };
-    })
-  ];
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    zed-unstable
+
+    (pkgs.zed-editor.overrideAttrs (oldAttrs: rec {
+      version = "0.147.1-pre";
+      src = oldAttrs.src.override {
+        rev = "refs/tags/v${version}";
+        hash = "sha256-8ijSsIT3zUteWR6T7m4OYSQgW4RPACmJzRParVssJHg=";
+        cargoLock = {
+        lockFile = ../../drv/zed/cargo.lock;
+      };
+    }))
+
     (pkgs.makeDesktopItem {
       type = "Application";
       exec = "neovide --grid 80x24";
