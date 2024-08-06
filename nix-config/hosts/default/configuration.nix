@@ -4,6 +4,17 @@
 
 { config, pkgs, inputs, lib, ... }:
 
+let
+  zed-editor-fhs = pkgs.buildFHSUserEnv {
+    name = "zed-editor-fhs";
+    targetPkgs = pkgs: [
+      pkgs.zed-editor
+      # Add other required packages here
+    ];
+    multiPkgs = pkgs: [ ]; # For 32-bit libraries
+    runScript = "zed"; # Command to run your application
+  };
+in
 {
   imports =
     [
@@ -36,6 +47,7 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
 
   # Set your time zone.
   time.timeZone = "America/Asuncion";
@@ -58,7 +70,7 @@
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    extraPortals = [ 
+    extraPortals = [
       inputs.xdg-desktop-portal-hyprland
       pkgs.xdg-desktop-portal-gtk
       pkgs.xdg-desktop-portal
@@ -100,18 +112,30 @@
   # Polkit KDE Auth
   security.polkit.enable = true;
 
+  # SUDO
+  security.sudo.wheelNeedsPassword = false;
+  security.sudo.extraConfig = ''
+    caches ALL=(ALL:ALL) NOPASSWD: /run/current-system/sw/bin/dotool
+  '';
+
+
   systemd = {
-    user.services.polkit-kde-authentication-agent-1 = {
-      description = "polkit-kde-authentication-agent-1";
-      wantedBy = [ "hyprland-session.target" ];
-      wants = [ "hyprland-session.target" ];
-      after = [ "hyprland-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
+    services = { # Root Services
+    
+    };
+    user.services = { # User Services
+      polkit-kde-authentication-agent-1 = {
+        description = "polkit-kde-authentication-agent-1";
+        wantedBy = [ "hyprland-session.target" ];
+        wants = [ "hyprland-session.target" ];
+        after = [ "hyprland-session.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.libsForQt5.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
       };
     };
   };
@@ -144,7 +168,7 @@
   users.users.caches = {
     isNormalUser = true;
     description = "Gustavo Dominguez";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "input" "uinput" ];
     packages = with pkgs; [
       firefox
       #  thunderbird
@@ -187,18 +211,18 @@
   services.udisks2.enable = true;
 
   # Firebird
-# services.firebird = {
-#       enable = true;
-#       package = pkgs.firebird_2_5;
-#     };
+  # services.firebird = {
+  #       enable = true;
+  #       package = pkgs.firebird_2_5;
+  #     };
 
-networking.firewall = {
-  enable = true;
-  allowedTCPPorts = [ 5173 ];
-  allowedUDPPortRanges = [
-    { from = 5172; to = 5173; }
-  ];
-};
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 5173 ];
+    allowedUDPPortRanges = [
+      { from = 5172; to = 5173; }
+    ];
+  };
 
   # MySql
   services.mysql.enable = true;
@@ -206,18 +230,9 @@ networking.firewall = {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
   environment.systemPackages = with pkgs; [
-
-    (pkgs.zed-editor.overrideAttrs (oldAttrs: rec {
-      version = "0.147.1-pre";
-      src = oldAttrs.src.override {
-        rev = "refs/tags/v${version}";
-        hash = "sha256-8ijSsIT3zUteWR6T7m4OYSQgW4RPACmJzRParVssJHg=";
-        cargoLock = {
-        lockFile = ../../drv/zed/cargo.lock;
-      };
-    }))
-
+    # ...packages down here
     (pkgs.makeDesktopItem {
       type = "Application";
       exec = "neovide --grid 80x24";
@@ -235,6 +250,7 @@ networking.firewall = {
     jetbrains.datagrip
     vscode-langservers-extracted
     jellyfin
+    zed-editor-fhs
     jellyfin-web
     jellyfin-ffmpeg
     qbittorrent
@@ -262,6 +278,8 @@ networking.firewall = {
     lf
     mc
     file
+    bitwarden-desktop
+    dotool
     sshfs
     realvnc-vnc-viewer
     (neovim.override {
@@ -356,18 +374,10 @@ networking.firewall = {
 
   fonts.packages = with pkgs; [
     noto-fonts-cjk-sans
-    (nerdfonts.override { fonts = [ "CascadiaCode" "Go-Mono"]; })
+    (nerdfonts.override { fonts = [ "CascadiaCode" "Go-Mono" ]; })
     corefonts
     atkinson-hyperlegible
   ];
-
-
-
-
-
-
-
-
 
   system.stateVersion = "23.11"; # Did you read the comment?
 

@@ -28,8 +28,8 @@
       "$mainMod" = "SUPER";
 
       env = [
-         "HYPRCURSOR_THEME,catppuccin-frappe-dark-cursors"
-         "HYPRCURSOR_SIZE,24"
+        "HYPRCURSOR_THEME,catppuccin-frappe-dark-cursors"
+        "HYPRCURSOR_SIZE,24"
       ];
 
       general = {
@@ -94,6 +94,7 @@
         "opacity 0.85 override,class:(nemo)"
         "opacity 0.95 override,class:(jetbrains-idea)"
         "opacity 0.85 override,class:(kitty)"
+        "opacity 0.85 override,class:(dev.zed.Zed)"
         "opacity 0.9 override,class:(Spotify)"
         "opacity 0.97 override,class:(discord)"
 
@@ -176,6 +177,8 @@
         "$mainMod, x, layoutmsg, rollprev"
         "$mainMod, z, layoutmsg, rollnext"
         "$mainMod, c, layoutmsg, focusmaster"
+        "$mainMod, [, exec, /home/caches/.dotfiles/scripts/scrollUp.sh"
+        "$mainMod, ], exec, /home/caches/.dotfiles/scripts/scrollUp.sh"
       ];
 
       bindr = [

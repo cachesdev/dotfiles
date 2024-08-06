@@ -1,4 +1,3 @@
-
 { stdenv, lib, fetchurl, rpmextract, makeWrapper, autoPatchelfHook, cpio }:
 
 stdenv.mkDerivation rec {
